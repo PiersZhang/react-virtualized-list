@@ -1,0 +1,77 @@
+<!--
+ * @Author: Piers.Zhang
+ * @Date: 2020-06-07 14:47:06
+ * @LastEditTime: 2020-06-07 15:14:35
+ * @LastEditors: Do not edit
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var count = 20000;
+        click1 = () => {
+            let start = new Date();
+            for (let i = 0; i < count; i++) {
+                let element = document.createElement('div');
+                let rootNode = document.getElementById('test-node');
+                element.appendChild(document.createTextNode('' + i));
+                rootNode.appendChild(element);
+            }
+            setTimeout(() => {
+                let end = new Date();
+                console.log(end - start);
+            }, 0);
+        }
+        click2 = () => {
+            let start = new Date();
+            for (let i = 0; i < count; i++) {
+                let element = document.createElement('div');
+                let rootNode = document.getElementById('test-node');
+                rootNode.appendChild(element);
+            }
+            setTimeout(function() {
+                console.log(new Date() - start);
+            }, 0);
+        }
+        click3 = () => {
+            let start = new Date();
+            let fragment = document.createDocumentFragment();
+            let rootNode = document.getElementById('test-node');
+            for (let i = 0; i < count; i++) {
+                let element = document.createElement('div');
+                element.appendChild(document.createTextNode('' + i));
+                fragment.appendChild(element);
+            }
+            rootNode.appendChild(fragment);
+            setTimeout(function() {
+                console.log(new Date() - start);
+            }, 0); 
+        }
+        click4 = () => {
+            let start = new Date();
+            let array = [];
+            let rootNode = document.getElementById('test-node');
+            for (let i = 0; i < count; i++) {
+                array.push('<div>' + i + '</div>');
+            }
+            let element = document.createElement('div');
+            element.innerHTML = array.join('');
+            rootNode.appendChild(element);
+            setTimeout(function() {
+                console.log(new Date() - start);
+            }, 0);
+        }
+    </script>
+    <button onclick="click1()">添加20000个有内容的div</button>
+    <button onclick="click2()">添加20000个没内容的div</button>
+    <button onclick="click3()">使用DocumentFragment</button>
+    <button onclick="click4()">使用innerHTML</button>
+    <div id="test-node"></div>
+</body>
+</html>
